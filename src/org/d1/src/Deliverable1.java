@@ -33,9 +33,10 @@ public class Deliverable1 {
 
 	private static final String RELEASE_DATE = "releaseDate";
 	private static final String USER_DIR = "user.dir";
-	private static final String MONTH_YEAR = "MM/YYYY";
+	private static final String MONTH_YEAR = "MM/yyyy";
 	private static List<Integer> checkedTickets = new ArrayList<>();
-
+	private static SimpleDateFormat format = new SimpleDateFormat("MM/yyyy");
+	
 	/** This function, given the project name, return the list of all ticket with status =("closed" or "resolved") and resolution="fixed"
 	 * 
 	 * @param montsMap The HashMap with the number of ticket fixed for each month
@@ -81,6 +82,8 @@ public class Deliverable1 {
 		Repository repository = builder.setGitDir(new File(repoFolder)).readEnvironment().findGitDir().build();
 		Pattern pattern = null; 
 		Matcher matcher = null; 
+		
+		LocalDate commitLocalDate;
 
 		// Try to open the Git repository
 		try (Git git = new Git(repository)) {
@@ -93,10 +96,9 @@ public class Deliverable1 {
 			for (RevCommit commit : commits) {
 
 				// Get the Date of the commit
-				LocalDate commitLocalDate = commit.getCommitterIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				commitLocalDate = commit.getCommitterIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				commitDateString = commitLocalDate.getMonthValue() + "/" + commitLocalDate.getYear();
-				commitDate=new SimpleDateFormat(MONTH_YEAR).parse(commitDateString); 
-
+				commitDate= format.parse(commitDateString); 
 				List<Integer> currentValue = new ArrayList<>(monthMap.get(commitDate));
 
 				// Check if the date key exists on the Map
@@ -217,8 +219,8 @@ public class Deliverable1 {
 			// ... check if version has release date and name, and add it to relative list
 			if (versions.getJSONObject(i).has(RELEASE_DATE) && versions.getJSONObject(i).has("name")) {
 
-				LocalDate test = LocalDate.parse(versions.getJSONObject(i).get(RELEASE_DATE).toString());
-				versionDateString = test.getMonthValue() + "/" + test.getYear();
+				LocalDate localDate = LocalDate.parse(versions.getJSONObject(i).get(RELEASE_DATE).toString());
+				versionDateString = localDate.getMonthValue() + "/" + localDate.getYear();
 				versionDate =new SimpleDateFormat(MONTH_YEAR).parse(versionDateString);   
 
 				// Get the list of value associated to the month
