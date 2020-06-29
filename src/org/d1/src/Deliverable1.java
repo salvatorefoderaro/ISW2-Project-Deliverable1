@@ -35,7 +35,6 @@ public class Deliverable1 {
 	private static final String USER_DIR = "user.dir";
 	private static final String MONTH_YEAR = "MM/yyyy";
 	private static List<Integer> checkedTickets = new ArrayList<>();
-	private static SimpleDateFormat format = new SimpleDateFormat("MM/yyyy");
 	
 	/** This function, given the project name, return the list of all ticket with status =("closed" or "resolved") and resolution="fixed"
 	 * 
@@ -83,6 +82,7 @@ public class Deliverable1 {
 		Pattern pattern = null; 
 		Matcher matcher = null; 
 		
+		SimpleDateFormat format = new SimpleDateFormat(MONTH_YEAR);
 		LocalDate commitLocalDate;
 
 		// Try to open the Git repository

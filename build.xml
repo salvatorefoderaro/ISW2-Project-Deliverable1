@@ -6,8 +6,8 @@
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="ISW2-Project-Deliverable1">
     <property environment="env"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="11"/>
-    <property name="source" value="11"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
     <path id="ISW2-Project-Deliverable1.classpath">
         <pathelement location="bin"/>
         <pathelement location="jar/commons-collections4-4.4.jar"/>
